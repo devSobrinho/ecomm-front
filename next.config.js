@@ -1,6 +1,18 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-}
+  compiler: {
+    styledComponents: true,
+  },
+  // basePath: '.',
+  webpack: (config) => {
+    config.resolve.modules.push(path.resolve('./'));
 
-module.exports = nextConfig
+    return config;
+  },
+};
+
+module.exports = nextConfig;
