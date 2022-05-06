@@ -20,13 +20,14 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   settings: {
     react: {
       version: 'detect',
     },
   },
   rules: {
+    'prettier/prettier': ['error'],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/react-in-jsx-scope': 'off',
   },

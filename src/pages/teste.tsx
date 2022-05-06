@@ -1,0 +1,100 @@
+import { HeaderMock } from '@mock/components/header/headerMock';
+import { Header } from 'src/layout/Header';
+
+export default function test(): JSX.Element {
+  console.log('aq', HeaderMock);
+
+  return (
+    <>
+      <Header {...HeaderMock} />
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+      <p>a</p>
+    </>
+  );
+}
