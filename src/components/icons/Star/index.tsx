@@ -1,3 +1,4 @@
+import { newArray } from '@utils/newArray';
 import * as Styled from './styles';
 
 export type StarProps = {
@@ -6,7 +7,7 @@ export type StarProps = {
 };
 
 export const Star = ({ rate, id }: StarProps): JSX.Element => {
-  const ratesStatus = Array.from(Array(5).keys());
+  const ratesStatus = newArray(5);
 
   return (
     <Styled.Wrapper>

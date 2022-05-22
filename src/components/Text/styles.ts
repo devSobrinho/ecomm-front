@@ -5,6 +5,9 @@ type TextProps = {
   type: TextType;
   theme: DefaultTheme;
   isActive?: boolean;
+  isUpperCase?: boolean;
+  isLowerCase?: boolean;
+  isCapitalize?: boolean;
 };
 
 const textStyled = ({ theme, type, isActive = false }: TextProps) => {
@@ -98,10 +101,15 @@ const textStyled = ({ theme, type, isActive = false }: TextProps) => {
 };
 
 export const Text = styled.p<TextProps>`
-  ${({ theme, type, isActive }) => css`
+  ${({ theme, type, isActive, isUpperCase, isLowerCase, isCapitalize }) => css`
     font-family: ${theme.font.family.primary};
     font-style: normal;
-    font-weight: 400;
-    ${textStyled({ theme, type, isActive })}
+    /* font-weight: 400; */
+    ${textStyled({ theme, type, isActive })};
+    ${isUpperCase ? 'text-transform: uppercase' : null};
+    ${isLowerCase ? 'text-transform: lowercase' : null};
+    ${isCapitalize ? 'text-transform: capitalize' : null};
+    ${isActive ? `color: ${theme.colors.primaryBlue}` : null};
+    /* text-transform: capitalize; */
   `}
 `;

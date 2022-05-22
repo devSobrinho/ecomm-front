@@ -5,11 +5,11 @@ import { AxiosResponse } from 'axios';
 
 type HttpResponse<T> = AxiosResponse<T>;
 
-export const loadProducts = async (categoryName?: string) => {
-  const query = `${categoryName ? `?name=${categoryName}` : ''}`;
-  const response: HttpResponse<CategoryHttp[]> = await api.get(
-    `/products${query ?? ''}`,
-  );
+// export const loadProducts = async (categoryName?: string) => {
+//   const query = `${categoryName ? `?name=${categoryName}` : ''}`;
+//   const response: HttpResponse<CategoryHttp[]> = await api.get(
+//     `/products${query ?? ''}`,
+//   );
 
-  return { ...response, totalPages: response.data.count };
-};
+//   return { ...response, totalPages: response.data.count };
+// };

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Header = styled.header`
   ${({ theme }) => css`
-    z-index: 2;
+    z-index: 99;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,7 +10,6 @@ export const Header = styled.header`
     padding: 0 10rem;
     height: 15rem;
     border-bottom: 1px solid ${theme.colors.grayLight};
-    z-index: 1;
   `}
 `;
 
@@ -33,7 +32,7 @@ export const SubCategoriesOut = styled.div`
 
 export const SubCategoriesHover = styled.div`
   ${({ theme }) => css`
-    z-index: 2;
+    z-index: 99;
     position: absolute;
     top: 8.5rem;
     left: 50%;

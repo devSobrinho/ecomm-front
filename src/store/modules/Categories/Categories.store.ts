@@ -19,6 +19,11 @@ export const fetchCategoryByName = createAsyncThunk(
   },
 );
 
+// react query -> cache // time
+
+// redux store category -> subCategory -> products[]
+// cookies // time
+
 const categories = createSlice({
   name: 'categories',
   initialState,

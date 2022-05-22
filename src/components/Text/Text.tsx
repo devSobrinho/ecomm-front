@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react';
 import * as Styled from './styles';
 
 export type TextType =
@@ -13,6 +14,10 @@ export type TextType =
   | 'sub-title'
   | 'sub-text';
 
+export type EventClickText =
+  | MouseEvent<HTMLParagraphElement, globalThis.MouseEvent>
+  | MouseEvent<HTMLHeadingElement, globalThis.MouseEvent>;
+
 export type TextProps = {
   text: string;
   as: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span';
@@ -20,6 +25,8 @@ export type TextProps = {
   isUpperCase?: boolean;
   isLowerCase?: boolean;
   isActive?: boolean;
+  isCapitalize?: boolean;
+  onClick?: (e: EventClickText) => void;
 };
 
 export const Text = ({
@@ -29,25 +36,19 @@ export const Text = ({
   isUpperCase,
   isLowerCase,
   isActive,
+  isCapitalize,
+  onClick,
 }: TextProps): JSX.Element => {
-  if (isUpperCase) {
-    return (
-      <Styled.Text as={as} type={type} isActive={isActive}>
-        {text.toUpperCase()}
-      </Styled.Text>
-    );
-  }
-
-  if (isLowerCase) {
-    return (
-      <Styled.Text as={as} type={type} isActive={isActive}>
-        {text.toLowerCase()}
-      </Styled.Text>
-    );
-  }
-
   return (
-    <Styled.Text as={as} type={type} isActive={isActive}>
+    <Styled.Text
+      as={as}
+      type={type}
+      isActive={isActive}
+      isUpperCase={isUpperCase}
+      isLowerCase={isLowerCase}
+      isCapitalize={isCapitalize}
+      onClick={onClick}
+    >
       {text}
     </Styled.Text>
   );

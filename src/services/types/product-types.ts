@@ -4,6 +4,7 @@ export type ProductCard = {
   img: ImageProduct;
   currentValue: number;
   previousValue: number;
+  description?: string;
 };
 
 export type ImageProduct = {
@@ -12,10 +13,11 @@ export type ImageProduct = {
 };
 
 export type ProductCardWithRate = {
-  rate: 0 | 1 | 2 | 3 | 4 | 5;
+  rate?: 0 | 1 | 2 | 3 | 4 | 5;
+  reviewsCount?: number;
 } & ProductCard;
 
-type Category = {
+export type Category = {
   id: string;
   name: string;
   products: ProductCardWithRate[];
@@ -31,9 +33,15 @@ export type CategoryHttp = {
   name: string;
 };
 
+// type SubCategory = {
+//   id: string;
+//   name: string;
+//   subCategories: string[];
+// };
+
 export type Product = {
   id: string;
-  title: string;
+  name: string;
   img: ImageProduct;
   currentValue: number;
   previousValue: number;
@@ -42,8 +50,21 @@ export type Product = {
   size: string[];
   sku: string;
   stockQuantity: number;
-  rating: UserRating[];
-  averageRating: number;
+  rating: number;
+  point: number;
+};
+
+export type CategoryData = {
+  id: string;
+  name: string;
+  // subCategoryList: SubCategoryData[];
+};
+
+export type SubCategoryData = {
+  id: string;
+  name: string;
+  // subCategoriesList: string[];
+  // products: Product[];
 };
 
 type UserRating = {

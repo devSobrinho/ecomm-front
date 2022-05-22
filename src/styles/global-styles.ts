@@ -3,7 +3,6 @@ import { resetCSS } from './reset-css';
 
 export const GlobalStyles = createGlobalStyle`
 
-
   ${resetCSS}
 
   * {

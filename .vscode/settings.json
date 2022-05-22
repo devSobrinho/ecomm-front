@@ -4,6 +4,7 @@
     "miragejs",
     "parcelamento",
     "reduxjs",
+    "serizalize",
     "swiper"
   ]
 }

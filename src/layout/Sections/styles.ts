@@ -1,7 +1,13 @@
+import { Wrapper } from '@components/GridProducts/styles';
 import { Text } from '@components/Text/styles';
 import styled, { css } from 'styled-components';
+import { CategorySelectProps } from './SectionByCategory';
 
-export const SectionByCategory = styled.section`
+type CategoryProps = {
+  selectCategory: CategorySelectProps;
+};
+
+export const SectionByCategory = styled.section<CategoryProps>`
   ${({ theme }) => css`
     margin-top: 6rem;
     display: flex;
@@ -28,6 +34,10 @@ export const SectionByCategory = styled.section`
         line-height: 3.3rem;
         color: ${theme.colors.blackText};
         font-family: ${theme.font.family.alternative};
+      }
+
+      & button > ${Wrapper} {
+        /* display: none; */
       }
     }
   `}

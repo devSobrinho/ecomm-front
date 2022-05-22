@@ -5,17 +5,25 @@ import { OfferBannerArticleMock } from '@mock/components/articles/OfferBannerArt
 import { SectionByCategory } from 'src/layout/Sections';
 import { OfferBannerArticle } from '@components/Article/OfferBannerArticle';
 import * as Styled from './styles';
+import { api } from '@services/api/api';
+import { GetServerSideProps } from 'next';
 
 const HomeTemplates = () => {
+  // api.get('api/products/1?name=Luxurious%Concrete%Chicken').then((data) => {
+  //   console.log('data', data);
+  // });
+
+  api.get('products').then((data) => {
+    console.log('aaaa', data);
+  });
+
   return (
     <>
       <Main>
         <Styled.Wrapper>
           <OfferBannerArticle {...OfferBannerArticleMock} />
-
           <Banners />
         </Styled.Wrapper>
-
         <SectionByCategory {...sectionByCategoryMock} />
       </Main>
     </>

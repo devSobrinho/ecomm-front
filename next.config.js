@@ -7,6 +7,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ['loremflickr.com'],
+  },
   // basePath: '.',
   webpack: (config) => {
     config.resolve.modules.push(path.resolve('./'));
