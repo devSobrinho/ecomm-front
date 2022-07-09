@@ -17,11 +17,13 @@ import {
   Product,
   SubCategoryData,
 } from '@services/types/product-types';
+import { User } from '@services/types/shared-types';
 
 export type IModels = {
   product: ModelDefinition<Assign<{}, ModelsExtend['product']>>;
   category: ModelDefinition<Assign<{}, ModelsExtend['category']>>;
-  // category: ModelDefinition<Assign<{}, ModelsExtend['category']>>;
+  subCategory: ModelDefinition<Assign<{}, ModelsExtend['subCategory']>>;
+  user: ModelDefinition<Assign<{}, ModelsExtend['user']>>;
 };
 
 export type IFactory = {
@@ -49,10 +51,10 @@ export type getRequestProps = (
 export interface ModelsExtend {
   category: Partial<CategoryData> & { subCategory: HasMany<string> };
   subCategory: Partial<SubCategoryData> & {
-    category: BelongsTo<string>;
     product: HasMany<string>;
   };
-  product: Partial<Product> & { subCategory: HasMany<string> };
+  product: Partial<Product>;
+  user: Partial<User>;
 }
 
 export type FactorysExtend = {

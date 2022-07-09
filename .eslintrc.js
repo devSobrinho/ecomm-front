@@ -30,5 +30,6 @@ module.exports = {
     'prettier/prettier': ['error'],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-namespace': 'off',
   },
 };

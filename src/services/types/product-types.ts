@@ -5,6 +5,7 @@ export type ProductCard = {
   currentValue: number;
   previousValue: number;
   description?: string;
+  stock: number;
 };
 
 export type ImageProduct = {
@@ -12,8 +13,10 @@ export type ImageProduct = {
   alt: string;
 };
 
+export type RateProps = 0 | 1 | 2 | 3 | 4 | 5;
+
 export type ProductCardWithRate = {
-  rate?: 0 | 1 | 2 | 3 | 4 | 5;
+  rate?: RateProps;
   reviewsCount?: number;
 } & ProductCard;
 
@@ -70,4 +73,22 @@ export type SubCategoryData = {
 type UserRating = {
   user_id: string;
   comment: string;
+};
+
+export type ProductData = {
+  brand: string;
+  colors: string[];
+  currentValue: number;
+  description: string;
+  id: string;
+  img: {
+    url: string;
+    alt: string;
+  };
+  name: string;
+  previousValue: number;
+  rate: number;
+  size: string[];
+  sku: string;
+  stockQuantity: number;
 };

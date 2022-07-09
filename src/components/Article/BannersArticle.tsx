@@ -1,5 +1,5 @@
 import { featuredCardMock } from '@mock/components/sections/featuredCardMock';
-import { Card } from '../Card/Card';
+import { Card } from '../../layout/Card/Card';
 import * as Styled from './styles';
 
 export const Banners = (): JSX.Element => {

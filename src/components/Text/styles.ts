@@ -10,6 +10,8 @@ type TextProps = {
   isCapitalize?: boolean;
 };
 
+type Status = 'danger' | 'success' | 'default';
+
 const textStyled = ({ theme, type, isActive = false }: TextProps) => {
   switch (type) {
     case 'logo-title': {
@@ -92,6 +94,15 @@ const textStyled = ({ theme, type, isActive = false }: TextProps) => {
         font-size: 2.2rem;
         line-height: 3.3rem;
         color: ${theme.colors.gray};
+      `;
+    }
+
+    case 'error-message': {
+      return css`
+        font-size: 1.2rem;
+        font-weight: 500;
+        line-height: 1.6rem;
+        color: ${theme.colors.primaryRed};
       `;
     }
 

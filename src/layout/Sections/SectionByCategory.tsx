@@ -4,7 +4,7 @@ import { Categories } from '@services/types/product-types';
 import { Text } from '../../components/Text';
 import { GridProducts } from '@components/GridProducts';
 import * as Styled from './styles';
-import { Card } from '@components/Card';
+import { Card } from 'src/layout/Card';
 import { useState } from 'react';
 
 export type SectionByCategoryProps = Categories;

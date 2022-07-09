@@ -9,7 +9,9 @@ export const theme: Theme = {
     primaryPurple: '#5C61F4',
     primaryGreen: '#53D1B6',
     gray: '#999999',
+    gray2: '#9098B1',
     grayLight: '#DFDEDE',
+    grayLight2: '#F6F7F8',
     blackText: '#393939',
     white: '#FFFFFF',
     // grayDark: "string;",
@@ -60,7 +62,9 @@ export type Theme = {
     primaryPurple: string;
     primaryGreen: string;
     gray: string;
+    gray2: string;
     grayLight: string;
+    grayLight2: string;
     // grayDark: string;
     // secondary: string;
     white: string;

@@ -1,0 +1,26 @@
+{
+  "details": [
+    {
+      "name": "Availability:",
+      "value": "In stock"
+    },
+    {
+      "name": "Category:",
+      "value": "Accessories"
+    },
+    {
+      "name": "Free shipping",
+      "value": ""
+    }
+  ],
+  "buttonShare": [
+    {
+      "name": "facebook",
+      "text": "Share on Facebook"
+    },
+    {
+      "name": "twitter",
+      "text": "Share on Twitter"
+    }
+  ]
+}

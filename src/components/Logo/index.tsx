@@ -7,7 +7,7 @@ import * as Styled from './styles';
 export type LogoProps = {
   url?: string;
   alt?: string;
-  text: string;
+  text?: string;
 };
 
 export const Logo = ({ text, url, alt }: LogoProps): JSX.Element => {

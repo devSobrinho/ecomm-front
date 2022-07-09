@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Text } from '@components/Text';
@@ -20,7 +20,8 @@ export type OptionsProps = {
 export type FilterProps = {
   title: string;
   options: OptionsProps[];
-  typeFilter: 'list' | 'colors' | 'ranger' | 'size';
+  typeFilter: 'list' | 'colors' | 'range' | 'size';
+  className?: string;
 };
 
 type Option = {
@@ -36,22 +37,22 @@ export const Filter = ({ ...props }: FilterProps): JSX.Element => {
   const [optionsState, setOptionsState] = useState<ListOptions>([]);
   const inputRangeRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    const filterQueryName = query[props.title];
-    const options = props.options.map((option) => {
-      if (filterQueryName && filterQueryName.includes(option.name)) {
-        return {
-          id: option.name,
-          isActive: true,
-        };
-      }
-      return {
-        id: option.name,
-        isActive: false,
-      };
-    });
-    setOptionsState(options);
-  }, []);
+  // useEffect(() => {
+  //   const filterQueryName = query[props.title];
+  //   const options = props.options.map((option) => {
+  //     if (filterQueryName && filterQueryName.includes(option.name)) {
+  //       return {
+  //         id: option.name,
+  //         isActive: true,
+  //       };
+  //     }
+  //     return {
+  //       id: option.name,
+  //       isActive: false,
+  //     };
+  //   });
+  //   setOptionsState(options);
+  // }, []);
 
   useEffect(() => {
     const filterQueryName = query[props.title];
@@ -71,34 +72,38 @@ export const Filter = ({ ...props }: FilterProps): JSX.Element => {
     setOptionsState(options);
   }, [query, props.options, props.title]);
 
-  const handleClickOptionSelect = (option: OptionsProps, queryName: string) => {
-    const { name: queryValue, range } = option;
+  const handleClickOptionSelect = useCallback(
+    (option: OptionsProps, queryName: string) => {
+      const { name: queryValue, range } = option;
 
-    //ROTA QUERY
-    if (queryValue === 'ranger') {
-      push({
-        pathname,
-        query: { ...query, [queryName]: inputRangeRef.current?.value ?? 0 },
-      });
-      return;
-    }
+      //ROTA QUERY
+      if (queryValue === 'range') {
+        push({
+          pathname,
+          query: { ...query, [queryName]: inputRangeRef.current?.value ?? 0 },
+        });
+        return;
+      }
 
-    if (!queryName && !queryValue) return;
-    if (query[queryName]?.includes(queryValue) && props.title === queryName) {
-      delete query[queryName];
+      if (!queryName && !queryValue) return;
+      if (query[queryName]?.includes(queryValue) && props.title === queryName) {
+        delete query[queryName];
+
+        push({ pathname, query });
+        return;
+      }
+
+      query[queryName] = queryValue;
 
       push({ pathname, query });
       return;
-    }
-
-    query[queryName] = queryValue;
-
-    push({ pathname, query });
-    return;
-  };
+    },
+    [pathname, props.title, push, query],
+  );
 
   return (
     <Styled.Wrapper
+      className={props.className}
       contentDirectionRow={props.typeFilter === 'colors' ? true : false}
     >
       <Text text={props.title} as="p" type="title-alternative" isUpperCase />
@@ -126,7 +131,7 @@ export const Filter = ({ ...props }: FilterProps): JSX.Element => {
                 </>
               )}
 
-              {props.typeFilter === 'ranger' && (
+              {props.typeFilter === 'range' && (
                 <>
                   {option.range && (
                     <Styled.RangerOption

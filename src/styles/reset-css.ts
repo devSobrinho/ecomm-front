@@ -126,12 +126,14 @@ export const resetCSS = css`
     border-spacing: 0;
   }
 
-  input[type='submit'],
+  /* input[type='submit'],
   input[type='reset'],
   input[type='button'],
-  input[type='checkbox'],
+  input[type='checkbox'], */
+  input,
   button {
     all: unset;
+    border: none;
     cursor: pointer;
   }
 `;

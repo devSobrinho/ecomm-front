@@ -27,7 +27,7 @@ export const FilterCategoryOne = ({
       />
 
       <Filter
-        title="colors"
+        title="color"
         typeFilter="colors"
         options={[
           { name: 'blue', color: '#006CFF' },
@@ -40,11 +40,11 @@ export const FilterCategoryOne = ({
       />
 
       <Filter
-        title="ranger"
-        typeFilter="ranger"
+        title="range"
+        typeFilter="range"
         options={[
           {
-            name: 'ranger',
+            name: 'range',
             range: {
               current: 'R$',
               maxValue: 555,

@@ -4,9 +4,8 @@ import { sectionByCategoryMock } from '@mock/components/articles/sectionByCatego
 import { OfferBannerArticleMock } from '@mock/components/articles/OfferBannerArticleMock';
 import { SectionByCategory } from 'src/layout/Sections';
 import { OfferBannerArticle } from '@components/Article/OfferBannerArticle';
-import * as Styled from './styles';
 import { api } from '@services/api/api';
-import { GetServerSideProps } from 'next';
+import * as Styled from './styles';
 
 const HomeTemplates = () => {
   // api.get('api/products/1?name=Luxurious%Concrete%Chicken').then((data) => {

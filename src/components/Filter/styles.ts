@@ -57,10 +57,13 @@ const selectColorFn = (
   return css`
     border-radius: 50%;
     border-color: ${color};
-    border: 2px solid ${color + '99'};
+    border: 2px solid ${color};
+    background-color: ${theme.colors.grayLight};
 
     &::after {
-      border: 1px solid ${theme.colors.gray};
+      border: 1px solid ${theme.colors.grayLight};
+    }
+    &::before {
     }
   `;
 };
@@ -70,8 +73,9 @@ export const ColorOption = styled.span<ColorOptionProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 3.1rem;
+    height: 3.1rem;
+    position: relative;
 
     ${selectColorFn(selectColor, color, theme)};
 
@@ -79,9 +83,15 @@ export const ColorOption = styled.span<ColorOptionProps>`
       content: '';
       width: 1.8rem;
       font-size: 1.8rem;
+      background: transparent;
       height: 1.8rem;
       border-radius: 50%;
+      border: 1px solid ${theme.colors.gray};
       background: ${color};
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
     }
   `}
 `;
@@ -106,7 +116,7 @@ export const RangerOption = styled.input<RangerOptionProps>`
     line-height: 2.2rem;
     color: ${theme.colors.blackText};
     &::before {
-      content: 'Ranger:';
+      content: 'Range:';
       position: absolute;
       bottom: 3rem;
     }
@@ -119,9 +129,30 @@ export const RangerOption = styled.input<RangerOptionProps>`
   `}
 `;
 
-export const WrapperOrder = styled.div`
-  ${({ theme }) => css`
+type WrapperOrderProps = {
+  isStyles?: boolean;
+};
+
+export const WrapperOrder = styled.div<WrapperOrderProps>`
+  ${({ theme, isStyles }) => css`
     display: flex;
+    ${isStyles &&
+    css`
+      select {
+        width: 12.1rem;
+        height: 3.8rem;
+        padding-left: 1.6rem;
+        border: none;
+        border-radius: 2px;
+        background: transparent;
+        border: 2px solid #f1f3f4;
+        cursor: pointer;
+
+        option {
+          background-color: ${theme.colors.grayLight2};
+        }
+      }
+    `}
   `}
 `;
 export const OrderFilterProduct = styled.div`

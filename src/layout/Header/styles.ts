@@ -4,11 +4,40 @@ export const Header = styled.header`
   ${({ theme }) => css`
     z-index: 99;
     display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+    /* margin: 0 auto;
+    padding: 0 10rem;
+    height: 15rem;
+    border-bottom: 1px solid ${theme.colors.grayLight}; */
+  `}
+`;
+
+export const Account = styled.div`
+  ${({ theme }) => css`
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
+    /* margin: 0 auto;
+    padding: 0 10rem;
+    height: 15rem;
+    border-bottom: 1px solid ${theme.colors.grayLight}; */
+  `}
+`;
+
+export const SubHeader = styled.div`
+  ${({ theme }) => css`
+    /* z-index: 99;s */
+    width: 100%;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
     padding: 0 10rem;
-    height: 15rem;
+    height: 8rem;
     border-bottom: 1px solid ${theme.colors.grayLight};
   `}
 `;
@@ -51,7 +80,7 @@ export const SubCategories = styled.div`
     border: 1px solid ${theme.colors.grayLight};
     position: absolute;
     bottom: 0;
-    top: 2rem;
+    top: 3rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;

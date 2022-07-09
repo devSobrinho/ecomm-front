@@ -1,12 +1,17 @@
-import { Text } from '@components/Text';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useProductsList } from 'src/hooks/useProducts';
 
+import { useProductsList } from 'src/hooks/useProducts';
+import { Text } from '@components/Text';
 import { FilterCategoryOne } from 'src/layout/Filters';
 import { ProductList } from 'src/layout/ProductList';
-import { productsCategoryFeminine1 as mockProductsFeminine } from '../../mock/components/products/productsCategoryFeminine';
 import * as Styled from './styles';
+
+const globalState = {
+  produtosState: [],
+  themeState: [],
+};
+globalState.produtosState;
 
 export type ListProductsCategoryOneProps = {
   title?: string;
@@ -16,12 +21,14 @@ export const ListProductsCategoryOne = ({
   title,
 }: ListProductsCategoryOneProps): JSX.Element => {
   const {
-    query: { category, subcategory, Show },
+    query: { category, subcategory, Show, page },
     asPath,
   } = useRouter();
+
+  const [perPage, setPerPage] = useState(12);
+  const [currentPage, setCurrentPage] = useState(1);
   const currentQuery = asPath.split('?')[1];
   const [queryCurrent, setQueryCurrent] = useState(currentQuery);
-  const rota = useRouter();
 
   const { data, isLoading, isFetching, error, refetch } = useProductsList(
     1,
@@ -35,7 +42,17 @@ export const ListProductsCategoryOne = ({
     setQueryCurrent(newCurrentQuery);
   }, [asPath]);
 
-  console.log('data query', data);
+  useEffect(() => {
+    if (Show && !isNaN(Number(Show))) {
+      setPerPage(Number(Show));
+    }
+  }, [Show]);
+
+  useEffect(() => {
+    if (page && !isNaN(Number(page))) {
+      setCurrentPage(Number(page));
+    }
+  }, [page]);
 
   const products = data?.data.products.map((product) => {
     return {
@@ -43,20 +60,13 @@ export const ListProductsCategoryOne = ({
       title: product.name,
       currentValue: product.currentValue,
       previousValue: product.previousValue,
-      rate: 2,
+      rate: product.rate,
       img: product.img,
       description: product.description,
+      stock: product.stockQuantity,
+      colors: product.colors,
     };
   });
-
-  console.log('products respo', products);
-
-  // const {} = useRouter();
-  // const route = useRouter();
-
-  // useEffect(() => {
-  //   console.log('mudou a query');
-  // }, [route.query]);
 
   return (
     <>
@@ -81,8 +91,13 @@ export const ListProductsCategoryOne = ({
       </Styled.Header>
       <Styled.Wrapper>
         <FilterCategoryOne />
-        <ProductList products={products} />
-        {/* <ProductList products={mockProductsFeminine()} /> */}
+        <ProductList
+          products={products}
+          productsCount={data?.data.count}
+          perPage={perPage}
+          count={data?.data.count}
+          currentPage={currentPage}
+        />
       </Styled.Wrapper>
     </>
   );

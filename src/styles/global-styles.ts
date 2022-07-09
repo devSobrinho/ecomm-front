@@ -18,9 +18,24 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     font-size: 1.6rem;
-    font-family: ${({ theme }) => theme.colors.white};
+    /* font-family: ${({ theme }) => theme.font.family.primary}; */
     position: relative;
     overflow-x: hidden;
+
+    & .ReactModal__Overlay{
+      z-index: 9999;
+      /* overflow: auto; */
+
+      /* height: 100vh; */
+
+      .ReactModal__Content{
+
+        &::-webkit-scrollbar {
+          display: none;
+          width: 0;
+        }
+      }
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {
