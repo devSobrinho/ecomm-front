@@ -1,5 +1,5 @@
 export class AuthTokenError extends Error {
-  constructor () {
+  constructor() {
     super('Error with authentication token.');
   }
 }
