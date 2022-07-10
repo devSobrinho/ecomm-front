@@ -5,12 +5,6 @@ export const Header = styled.header`
     z-index: 99;
     display: flex;
     flex-direction: column;
-    /* justify-content: center;
-    align-items: center; */
-    /* margin: 0 auto;
-    padding: 0 10rem;
-    height: 15rem;
-    border-bottom: 1px solid ${theme.colors.grayLight}; */
   `}
 `;
 
@@ -19,12 +13,6 @@ export const Account = styled.div`
     z-index: 99;
     display: flex;
     flex-direction: column;
-    /* justify-content: center;
-    align-items: center; */
-    /* margin: 0 auto;
-    padding: 0 10rem;
-    height: 15rem;
-    border-bottom: 1px solid ${theme.colors.grayLight}; */
   `}
 `;
 
@@ -55,7 +43,6 @@ export const SubCategoriesOut = styled.div`
     padding-right: 50vw;
     margin: 0 auto;
     height: 800px;
-    /* background: yellow; */
   `}
 `;
 
@@ -63,15 +50,12 @@ export const SubCategoriesHover = styled.div`
   ${({ theme }) => css`
     z-index: 99;
     position: absolute;
-    top: 8.5rem;
+    top: 11rem;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     margin: 0 auto;
-    /* height: 100%; */
-    /* max-height: 450px; */
     height: 450px;
-    /* background: blue; */
   `}
 `;
 

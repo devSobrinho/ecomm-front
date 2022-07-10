@@ -13,6 +13,7 @@ export const Link = styled.li`
   ${({ theme }) => css`
     position: relative;
     z-index: 3;
+    cursor: pointer;
 
     a {
       cursor: pointer;
