@@ -1,9 +1,18 @@
 import { gql } from 'graphql-request';
 
-export const GRAPHQL_FRAGMENTS = gql`
-  fragment cor on Cor {
+export const GRAPHQL_FRAGMENTS_PAGINATION = gql`
+  fragment color on ColorSchema {
     id
     name
+    color {
+      hex
+      rgba {
+        r
+        g
+        b
+        a
+      }
+    }
   }
 
   fragment brands on Brand {
@@ -13,7 +22,7 @@ export const GRAPHQL_FRAGMENTS = gql`
 
   fragment sizes on Size {
     id
-    value
+    name
   }
 
   fragment reviews on Review {
@@ -33,6 +42,38 @@ export const GRAPHQL_FRAGMENTS = gql`
         url
         width
         height
+      }
+    }
+  }
+
+  fragment product on Product {
+    createdAt
+    id
+    name
+    currentPrice
+    previousPrice
+    description
+    slug
+    stock
+    colors {
+      ...color
+    }
+    brands {
+      ...brands
+    }
+    sizes {
+      ...sizes
+    }
+    reviews {
+      ...reviews
+    }
+    imagesProduct {
+      ...imageProduct
+    }
+    subCategories {
+      name
+      categories {
+        name
       }
     }
   }

@@ -13,8 +13,10 @@ export type IHeader = {
 export type IMenu = {
   id: string;
   name: string;
-  categories: {
-    title: string;
-    subCategories: string[];
+  subCategories: {
+    id: string;
+    name: string;
+    title?: string;
+    // subCategories: string[];
   }[];
 };
