@@ -29,15 +29,17 @@ export const ListProductsCategoryOne = ({
   const [currentPage, setCurrentPage] = useState(1);
   const currentQuery = asPath.split('?')[1];
   const [queryCurrent, setQueryCurrent] = useState(currentQuery);
+  const { query } = useRouter();
 
   const { data, isLoading, isFetching, error, refetch } = useProductsList(
     1,
-    queryCurrent,
+    query,
   );
+
+  console.log('produtos do hook ql data', data);
 
   useEffect(() => {
     const newCurrentQuery = asPath.split('?')[1];
-    console.log('entrou');
 
     setQueryCurrent(newCurrentQuery);
   }, [asPath]);
@@ -54,19 +56,19 @@ export const ListProductsCategoryOne = ({
     }
   }, [page]);
 
-  const products = data?.data.products.map((product) => {
-    return {
-      id: product.id,
-      title: product.name,
-      currentValue: product.currentValue,
-      previousValue: product.previousValue,
-      rate: product.rate,
-      img: product.img,
-      description: product.description,
-      stock: product.stockQuantity,
-      colors: product.colors,
-    };
-  });
+  // const products = data?.data.products.map((product) => {
+  //   return {
+  //     id: product.id,
+  //     title: product.name,
+  //     currentValue: product.currentValue,
+  //     previousValue: product.previousValue,
+  //     rate: product.rate,
+  //     img: product.img,
+  //     description: product.description,
+  //     stock: product.stockQuantity,
+  //     colors: product.colors,
+  //   };
+  // });
 
   return (
     <>
@@ -91,13 +93,13 @@ export const ListProductsCategoryOne = ({
       </Styled.Header>
       <Styled.Wrapper>
         <FilterCategoryOne />
-        <ProductList
+        {/* <ProductList
           products={products}
           productsCount={data?.data.count}
           perPage={perPage}
           count={data?.data.count}
           currentPage={currentPage}
-        />
+        /> */}
       </Styled.Wrapper>
     </>
   );

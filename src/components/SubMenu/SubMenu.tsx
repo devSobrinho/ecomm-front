@@ -9,69 +9,30 @@ export type SubMenuProps = IMenu;
 export const SubMenu = ({ ...props }: SubMenuProps): JSX.Element => {
   return (
     <>
-      <Styled.List>
-        {props.categories.map((category, index) => {
-          const categoriesLength = category.subCategories.length;
-          const name = props.name.toLocaleLowerCase();
-          return (
-            <Styled.GridSubCategory
-              categoriesLength={categoriesLength}
-              key={`${index}-${category.title}`}
-            >
-              <Text as="h3" type="sub-title" text={category.title} />
-              <nav>
-                {category.subCategories.length < 10 &&
-                  category.subCategories.map((subC, index) => {
-                    return (
-                      <LinkSubCategory
-                        href={{
-                          pathname: '/c',
-                          query: {
-                            category: name,
-                            subcategory: subC.toLocaleLowerCase(),
-                          },
-                        }}
-                        key={`${index}-${subC}`}
-                        text={subC}
-                      />
-                    );
-                  })}
-                {category.subCategories.length >= 10 && (
-                  <>
-                    {category.subCategories.map((subC, index) => {
-                      if (index >= 9) return;
-
-                      return (
-                        <LinkSubCategory
-                          href={{
-                            pathname: '/c',
-                            query: {
-                              category: name,
-                              subcategory: subC.toLocaleLowerCase(),
-                            },
-                          }}
-                          key={`${index}-${subC}`}
-                          text={subC}
-                        />
-                      );
-                    })}
-                    <LinkSubCategory
-                      href={{
-                        pathname: '/c',
-                        query: {
-                          category: name,
-                          subcategory: 'ver tudo',
-                        },
-                      }}
-                      text={'Ver tudo'}
-                    />
-                  </>
+      <nav>
+        <Styled.List categoriesLength={props.subCategories.length}>
+          {props.subCategories.map((subCategory) => {
+            const name = props.name.toLocaleLowerCase();
+            return (
+              <Styled.GridSubCategory key={subCategory.id}>
+                {subCategory.title && (
+                  <Text as="h3" type="sub-title" text={subCategory.title} />
                 )}
-              </nav>
-            </Styled.GridSubCategory>
-          );
-        })}
-      </Styled.List>
+                <LinkSubCategory
+                  href={{
+                    pathname: '/c',
+                    query: {
+                      category: name,
+                      subcategory: subCategory.name.toLocaleLowerCase(),
+                    },
+                  }}
+                  text={subCategory.name}
+                />
+              </Styled.GridSubCategory>
+            );
+          })}
+        </Styled.List>
+      </nav>
     </>
   );
 };

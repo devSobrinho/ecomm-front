@@ -36,6 +36,7 @@ export const Teste = ({ title }: TesteProps): JSX.Element => {
     // console.log('data2 no form', data2);
     // console.log('data no form', data);
   };
+
   return (
     <>
       <div>

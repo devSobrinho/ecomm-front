@@ -27,7 +27,7 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
 
         <Menu>
           <>
-            {props.menu.map((link) => {
+            {props.menu?.map((link) => {
               const name = link.name.toLowerCase();
               return (
                 <MenuLink
@@ -47,15 +47,15 @@ export const Header = ({ ...props }: HeaderProps): JSX.Element => {
             <Styled.SubCategoriesOut
               onMouseOver={() => setIdCategoryHover('')}
             ></Styled.SubCategoriesOut>
-            <Styled.SubCategoriesHover onMouseOver={() => console.log('aaaaa')}>
+            <Styled.SubCategoriesHover>
               <Styled.SubCategories>
-                {props.menu.map((f) => {
+                {props.menu?.map((f) => {
                   if (f.id === idCategoryHover) {
                     return (
                       <SubMenu
                         key={f.id}
                         id={f.id}
-                        categories={f.categories}
+                        subCategories={f.subCategories}
                         name={f.name}
                       />
                     );
