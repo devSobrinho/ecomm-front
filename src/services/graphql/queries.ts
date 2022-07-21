@@ -82,13 +82,13 @@ export const GRAPHQL_QUERY_PAGINATION_WITH_FILTERS = gql`
   ${GRAPHQL_FRAGMENTS_PAGINATION}
 
   query GET_PRODUCTS_PAGINATION(
-    $orderBy: ProductOrderByInput = createdAt_DESC
-    $slugProduct: String
+    $orderBy: ProductOrderByInput = updatedAt_DESC
+    $slugProduct: String = ""
     $skip: Int = 0
-    $last: Int = 10
-    $productName: String
-    $subCategoryName: String
-    $categoryName: String
+    $last: Int = 12
+    $productName: String = ""
+    $subCategoryName: String = ""
+    $categoryName: String = ""
   ) {
     productsConnection(
       where: {
@@ -120,17 +120,165 @@ export const GRAPHQL_QUERY_ALL_INFO_PAGINATION = gql`
 
   query GET_PRODUCTS_PAGINATION(
     $orderBy: ProductOrderByInput = createdAt_DESC
-    $slugProduct: String
+    $slugProduct: String = ""
     $skip: Int = 0
     $last: Int = 10
-    $productName: String
-    $subCategoryName: String
-    $categoryName: String
+    $productName: String = ""
+    $subCategoryName: String = ""
+    $categoryName: String = ""
+    $brandName: String = ""
+    $sizeName: String = ""
+    $colorName: String = ""
+    $priceRange: Float = 9999999999
   ) {
-    productsConnection(
+    priceProductDESC: products(
+      orderBy: currentPrice_DESC
+      first: 1
       where: {
         name_contains: $productName
         slug_contains: $slugProduct
+        colors_some: { name_contains: $colorName }
+        brands_some: { name_contains: $brandName }
+        sizes_some: { name_contains: $sizeName }
+        subCategories_some: {
+          name_contains: $subCategoryName
+          categories_some: { name_contains: $categoryName }
+        }
+      }
+    ) {
+      id
+      name
+      currentPrice
+    }
+
+    priceProductASC: products(
+      orderBy: currentPrice_ASC
+      first: 1
+      where: {
+        name_contains: $productName
+        slug_contains: $slugProduct
+        colors_some: { name_contains: $colorName }
+        brands_some: { name_contains: $brandName }
+        sizes_some: { name_contains: $sizeName }
+        subCategories_some: {
+          name_contains: $subCategoryName
+          categories_some: { name_contains: $categoryName }
+        }
+      }
+    ) {
+      id
+      name
+      currentPrice
+    }
+
+    brandsConnection(
+      where: {
+        products_some: {
+          currentPrice_lte: $priceRange
+          name_contains: $productName
+          slug_contains: $slugProduct
+          colors_some: { name_contains: $colorName }
+          brands_some: { name_contains: $brandName }
+          sizes_some: { name_contains: $sizeName }
+          subCategories_some: {
+            name_contains: $subCategoryName
+            categories_some: { name_contains: $categoryName }
+          }
+        }
+      }
+    ) {
+      aggregate {
+        count
+      }
+      edges {
+        node {
+          id
+          name
+          products(
+            where: {
+              currentPrice_lte: $priceRange
+              name_contains: $productName
+              slug_contains: $slugProduct
+              colors_some: { name_contains: $colorName }
+              brands_some: { name_contains: $brandName }
+              sizes_some: { name_contains: $sizeName }
+              subCategories_some: {
+                name_contains: $subCategoryName
+                categories_some: { name_contains: $categoryName }
+              }
+            }
+          ) {
+            name
+          }
+        }
+      }
+    }
+
+    sizesConnection(
+      where: {
+        products_some: {
+          currentPrice_lte: $priceRange
+          name_contains: $productName
+          slug_contains: $slugProduct
+          colors_some: { name_contains: $colorName }
+          brands_some: { name_contains: $brandName }
+          sizes_some: { name_contains: $sizeName }
+          subCategories_some: {
+            name_contains: $subCategoryName
+            categories_some: { name_contains: $categoryName }
+          }
+        }
+      }
+    ) {
+      aggregate {
+        count
+      }
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+
+    colorsConnection(
+      where: {
+        products_some: {
+          currentPrice_lte: $priceRange
+          name_contains: $productName
+          slug_contains: $slugProduct
+          colors_some: { name_contains: $colorName }
+          brands_some: { name_contains: $brandName }
+          sizes_some: { name_contains: $sizeName }
+          subCategories_some: {
+            name_contains: $subCategoryName
+            categories_some: { name_contains: $categoryName }
+          }
+        }
+      }
+    ) {
+      aggregate {
+        count
+      }
+      edges {
+        node {
+          id
+          name
+          color {
+            hex
+          }
+        }
+      }
+    }
+
+    productsConnection(
+      where: {
+        currentPrice_lte: $priceRange
+        name_contains: $productName
+        slug_contains: $slugProduct
+        colors_some: { name_contains: $colorName }
+        brands_some: { name_contains: $brandName }
+        sizes_some: { name_contains: $sizeName }
         subCategories_some: {
           name_contains: $subCategoryName
           categories_some: { name_contains: $categoryName }
@@ -149,74 +297,31 @@ export const GRAPHQL_QUERY_ALL_INFO_PAGINATION = gql`
         count
       }
     }
+  }
+`;
 
-    brandsConnection(
-      where: {
-        products_some: {
-          name_contains: $productName
-          slug_contains: $slugProduct
-          subCategories_some: {
-            name_contains: $subCategoryName
-            categories_some: { name_contains: $categoryName }
-          }
-        }
-      }
-    ) {
-      aggregate {
-        count
-      }
-      edges {
-        node {
-          id
-          name
-        }
-      }
+export const GET_USER_BY_EMAIL = gql`
+  query GET_USER_BY_EMAIL($email: String) {
+    user: nextUser(where: { email: $email }, stage: DRAFT) {
+      id
+      password
     }
+  }
+`;
 
-    sizesConnection(
-      where: {
-        products_some: {
-          name_contains: $productName
-          slug_contains: $slugProduct
-          subCategories_some: {
-            name_contains: $subCategoryName
-            categories_some: { name_contains: $categoryName }
-          }
-        }
-      }
-    ) {
-      # aggregate {
-      #   count
-      # }
-      edges {
-        node {
-          id
-          name
-        }
-      }
+export const GET_SPECIFICATIONS = gql`
+  query GET_SPECIFICATIONS {
+    colors {
+      id
+      name
     }
-
-    colorsConnection(
-      where: {
-        products_some: {
-          name_contains: $productName
-          slug_contains: $slugProduct
-          subCategories_some: {
-            name_contains: $subCategoryName
-            categories_some: { name_contains: $categoryName }
-          }
-        }
-      }
-    ) {
-      aggregate {
-        count
-      }
-      edges {
-        node {
-          id
-          name
-        }
-      }
+    brands {
+      id
+      name
+    }
+    sizes {
+      id
+      name
     }
   }
 `;

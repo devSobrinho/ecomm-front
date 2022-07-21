@@ -1,16 +1,69 @@
 import { Filter } from '@components/Filter';
+import { useAppSelector } from '../../store';
 import * as Styled from './styles';
 
-export type FilterCategoryOneProps = {
-  title?: string;
-};
+interface ColorsInfo {
+  count: number;
+  colors: { id: string; name: string; color: string }[];
+}
+
+interface BrandsInfo {
+  count: number;
+  brands: { id: string; name: string; amount: number }[];
+}
+
+interface SizesInfo {
+  count: number;
+  sizes: { id: string; name: string }[];
+}
+
+interface IFilterCategoryOne {
+  colorsInfo?: ColorsInfo;
+  sizesInfo?: SizesInfo;
+  brandsInfo?: BrandsInfo;
+  priceProductMax?: number;
+  priceProductMin?: number;
+}
 
 export const FilterCategoryOne = ({
-  title,
-}: FilterCategoryOneProps): JSX.Element => {
+  colorsInfo,
+  brandsInfo,
+  sizesInfo,
+  priceProductMax,
+  priceProductMin,
+}: IFilterCategoryOne): JSX.Element => {
+  // const { filters } = useAppSelector();
+  // console.log('all filters', filters);
+  console.log('propssss coolor', colorsInfo, brandsInfo, sizesInfo);
+
   return (
     <Styled.Wrapper>
-      <Filter
+      {brandsInfo?.brands && brandsInfo.brands.length > 0 && (
+        <Filter title="brand" typeFilter="list" options={brandsInfo?.brands} />
+      )}
+
+      {colorsInfo?.colors && colorsInfo.colors.length > 0 && (
+        <Filter title="color" typeFilter="colors" options={colorsInfo.colors} />
+      )}
+
+      {priceProductMax && (
+        <Filter
+          title="range"
+          typeFilter="range"
+          options={[
+            {
+              name: 'range',
+              range: {
+                current: 'R$',
+                maxValue: priceProductMax,
+                minValue: priceProductMin ?? 0,
+              },
+            },
+          ]}
+        />
+      )}
+
+      {/* <Filter
         title="hot deals"
         typeFilter="list"
         options={[
@@ -24,47 +77,7 @@ export const FilterCategoryOne = ({
           { name: 'nike', amount: 42 },
           { name: 'airmax3', amount: 11 },
         ]}
-      />
-
-      <Filter
-        title="color"
-        typeFilter="colors"
-        options={[
-          { name: 'blue', color: '#006CFF' },
-          { name: 'red', color: '#FC3E39' },
-          { name: 'black', color: '#171717' },
-          { name: 'yellow', color: '#FFF600' },
-          { name: 'pink', color: '#FF00B4' },
-          { name: 'ellipse', color: '#EFDFDF' },
-        ]}
-      />
-
-      <Filter
-        title="range"
-        typeFilter="range"
-        options={[
-          {
-            name: 'range',
-            range: {
-              current: 'R$',
-              maxValue: 555,
-              minValue: 50,
-            },
-          },
-        ]}
-      />
-
-      <Filter
-        title="brand"
-        typeFilter="list"
-        options={[
-          { name: 'nike', amount: 2 },
-          { name: 'airmax', amount: 48 },
-          { name: 'airmax', amount: 10 },
-          { name: 'adidas', amount: 45 },
-          { name: 'vans', amount: 5 },
-        ]}
-      />
+      /> */}
 
       <Styled.ButtonMore>MORE</Styled.ButtonMore>
     </Styled.Wrapper>

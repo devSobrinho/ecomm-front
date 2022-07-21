@@ -16,6 +16,19 @@ interface AuthResponse {
   };
 }
 
+// export const postLogin = async ({
+//   email,
+//   password,
+// }: AuthLogin): Promise<AuthResponse | null> => {
+//   try {
+//     const response = await api.post('/login', { email, password });
+
+//     return response.data.response;
+//   } catch (error) {
+//     return null;
+//   }
+// };
+
 export const postLogin = async ({
   email,
   password,

@@ -2,6 +2,7 @@ import { PricesCard } from '@components/PricesCard';
 import { ReviewSummary } from '@components/Review';
 import { ProductData } from '@services/types/product-types';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 
 import { Main } from 'src/layout/Main';
 import ProductTemplates from 'src/templates/Product';
@@ -11,6 +12,8 @@ const Product: NextPage<{ product: any }> = ({
   product,
 }): JSX.Element => {
   console.log('os p', product);
+
+  const { push } = useRouter();
 
   return (
     <>
@@ -46,7 +49,6 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { params } = ctx;
-
   console.log('params', params);
 
   let product = {};

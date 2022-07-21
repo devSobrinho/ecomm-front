@@ -13,8 +13,7 @@ export type TextType =
   | 'text-alternative'
   | 'sub-title'
   | 'sub-text'
-  | 'error-message'
-  | 'novoaq';
+  | 'error-message';
 
 export type EventClickText =
   | MouseEvent<HTMLParagraphElement, globalThis.MouseEvent>
@@ -22,7 +21,7 @@ export type EventClickText =
 
 export type TextProps = {
   text: string;
-  as: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span' | 'strong';
+  as: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span' | 'strong' | 'label';
   type: TextType;
   isUpperCase?: boolean;
   isLowerCase?: boolean;

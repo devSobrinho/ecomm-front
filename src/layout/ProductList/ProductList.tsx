@@ -1,16 +1,15 @@
-import { useReducer, useState } from 'react';
+import { useState } from 'react';
 
 import { Card } from 'src/layout/Card';
 import { FilterOrderProduct } from '@components/Filter/FilterOrderProduct';
 import { GridProducts } from '@components/GridProducts';
 import { SwitchOrders } from '@components/SwitchOrders';
-import { ProductCardWithRate } from '@services/types/product-types';
+import { IProduct } from '@services/types/product-types';
 import { Pagination } from '@components/Pagination';
 import * as Styled from './styles';
 
 type ProductListProps = {
-  products: ProductCardWithRate[];
-  productsCount: number;
+  products: IProduct[];
   perPage: number;
   count: number;
   currentPage: number;
@@ -18,13 +17,14 @@ type ProductListProps = {
 
 export const ProductList = ({
   products,
-  productsCount,
   perPage,
   count,
   currentPage,
 }: ProductListProps): JSX.Element => {
   const [orderSwitchGrid, setOrderSwitchGrid] = useState(true);
   const [orderSwitchList, setOrderSwitchList] = useState(false);
+
+  console.log('products porpsssssss', products);
 
   return (
     <Styled.Wrapper isSwitchGrid={orderSwitchGrid}>
@@ -65,18 +65,23 @@ export const ProductList = ({
         </div>
       </Styled.Orders>
       <GridProducts>
-        {products?.map((product, index) => {
-          console.log('produrata', product);
-
+        {products?.map((product) => {
           return (
             <Card
               key={product.id}
               cardStyles="product"
               typeText="title-card"
               href={`product/${product.id}`}
-              rate={product.rate}
               isCardList={orderSwitchList}
-              {...product}
+              id={product.id}
+              title={product.title}
+              description={product.description}
+              colors={product.colors}
+              currentValue={product.currentValue}
+              previousValue={product.previousValue}
+              stock={product.stock}
+              images={product.images}
+              reviews={product.reviews}
             />
           );
         })}

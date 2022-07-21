@@ -8,7 +8,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ['loremflickr.com'],
+    domains: ['loremflickr.com', 'media.graphassets.com'],
   },
   // basePath: '.',
   webpack: (config) => {

@@ -41,6 +41,8 @@ export const FormControl = styled.div<FormControlProps>`
     height: 4.8rem;
 
     & input[type='text'],
+    input[type='number'],
+    .inputFile,
     input[type='password'] {
       padding: 1.3rem 1.6rem;
       ${isIcon && 'padding-left: 5rem'};
@@ -58,7 +60,25 @@ export const FormControl = styled.div<FormControlProps>`
         : null}
     }
 
-    & ${Text} {
+    & input[type='file'] {
+      display: none;
+    }
+    .inputFile {
+      /* background: red; */
+      padding: 1rem;
+      background: ${theme.colors.neutralDark};
+      max-width: 20rem;
+      text-align: center;
+      font-weight: 600;
+      color: ${theme.colors.white};
+    }
+
+    & label {
+      text-transform: capitalize;
+      cursor: pointer;
+    }
+
+    & ${Text} span {
       position: absolute;
       bottom: -1.8rem;
 

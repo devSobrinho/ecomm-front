@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 
 import { addProduct } from '../../store/modules/Wishlist/Wishlist.store';
 import { addProduct as addProductCart } from '../../store/modules/Cart/Cart.store';
-import { ProductCardWithRate } from '@services/types/product-types';
+import { Color, IProduct } from '@services/types/product-types';
 import { DiscountPrice } from '@utils/discountPrice';
 import { Text, TextType } from '../../components/Text';
 import { FavoriteIcon } from '@components/icons/Favorite';
@@ -14,15 +14,15 @@ import { RootState } from '../../store';
 import { InputButton } from '@components/Input/InputButton';
 import { ReviewSummary } from '@components/Review';
 import { PricesCard } from '../../components/PricesCard';
-import * as Styled from './styles';
+import * as Styles from './styles';
 
 export type CardProps = {
   cardStyles: 'primary' | 'secondary' | 'alternative' | 'product' | 'page';
   typeText?: TextType;
   href: string;
   isCardList?: boolean;
-  colors: string[];
-} & ProductCardWithRate;
+  // colors: Color[];
+} & IProduct;
 
 export const Card = ({ ...props }: CardProps): JSX.Element => {
   const dispatch = useDispatch();
@@ -40,11 +40,13 @@ export const Card = ({ ...props }: CardProps): JSX.Element => {
         product: {
           id: props.id,
           stock: props.stock,
-          name: props.title,
-          price: props.currentValue,
-          image: props.img,
+          title: props.title,
+          currentValue: props.currentValue,
+          previousValue: props.previousValue,
+          images: props.images,
+          colors: props.colors,
+          description: props.description,
           amount: 1,
-          color: props.colors[0],
         },
       }),
     );
@@ -52,8 +54,10 @@ export const Card = ({ ...props }: CardProps): JSX.Element => {
     dispatch,
     props.colors,
     props.currentValue,
+    props.description,
     props.id,
-    props.img,
+    props.images,
+    props.previousValue,
     props.stock,
     props.title,
   ]);
@@ -64,10 +68,12 @@ export const Card = ({ ...props }: CardProps): JSX.Element => {
         product: {
           id: props.id,
           stock: props.stock,
-          name: props.title,
-          image: props.img,
-          price: props.currentValue,
-          color: props.colors[0],
+          title: props.title,
+          images: props.images,
+          currentValue: props.currentValue,
+          previousValue: props.previousValue,
+          colors: props.colors,
+          description: props.description,
         },
       }),
     );
@@ -75,14 +81,17 @@ export const Card = ({ ...props }: CardProps): JSX.Element => {
     dispatch,
     props.colors,
     props.currentValue,
+    props.description,
     props.id,
-    props.img,
+    props.images,
+    props.previousValue,
     props.stock,
     props.title,
   ]);
+  console.log('props.images', props.images);
 
   return (
-    <Styled.Wrapper
+    <Styles.Wrapper
       cardStyles={props.cardStyles}
       isProductHover={hoverCardVisibility}
       isCardList={props.isCardList}
@@ -92,12 +101,23 @@ export const Card = ({ ...props }: CardProps): JSX.Element => {
       <div className="card-image">
         <Link href={`${props.href}`} passHref>
           <a>
-            <Image
-              width={408}
-              height={357}
-              src={props.img.url}
-              alt={props.img?.alt ?? ''}
-            />
+            {props.images && props.images[0]?.images[0]?.image?.url ? (
+              <Image
+                key={props.images[0].id}
+                width={408}
+                height={357}
+                src={props.images[0].images[0]?.image?.url}
+                alt={props.images[0]?.images[0]?.alt}
+              />
+            ) : (
+              <Image
+                width={408}
+                height={357}
+                src={'/assets/images/not image.png'}
+                style={{ opacity: '0.5' }}
+                alt={'No product image'}
+              />
+            )}
           </a>
         </Link>
         {hoverCardVisibility &&
@@ -145,12 +165,12 @@ export const Card = ({ ...props }: CardProps): JSX.Element => {
             <Text as="h4" type="title-card" text={props.title} />
           </a>
         </Link>
-        <ReviewSummary
+        {/* <ReviewSummary
           productId={props.id}
           rate={props.rate ?? 0}
           isCardList={props.isCardList}
           reviewsCount={props.reviewsCount ?? 0}
-        />
+        /> */}
         <PricesCard
           isCardList={props.isCardList}
           currentValue={props.currentValue}
@@ -162,12 +182,7 @@ export const Card = ({ ...props }: CardProps): JSX.Element => {
           <>
             {props.description && (
               <div className="card-description">
-                <Text
-                  type="text-card"
-                  as="p"
-                  text={props.description}
-                  isCapitalize
-                />
+                <Text type="text-card" as="p" text={props.description} />
               </div>
             )}
 
@@ -208,6 +223,6 @@ export const Card = ({ ...props }: CardProps): JSX.Element => {
           </>
         )}
       </div>
-    </Styled.Wrapper>
+    </Styles.Wrapper>
   );
 };

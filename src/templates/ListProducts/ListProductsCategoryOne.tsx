@@ -6,12 +6,8 @@ import { Text } from '@components/Text';
 import { FilterCategoryOne } from 'src/layout/Filters';
 import { ProductList } from 'src/layout/ProductList';
 import * as Styled from './styles';
-
-const globalState = {
-  produtosState: [],
-  themeState: [],
-};
-globalState.produtosState;
+import { useAppDispatch } from '../../store';
+import { addFilters } from '@store/modules/Filters/Filters.store';
 
 export type ListProductsCategoryOneProps = {
   title?: string;
@@ -24,11 +20,11 @@ export const ListProductsCategoryOne = ({
     query: { category, subcategory, Show, page },
     asPath,
   } = useRouter();
-
+  const dispatch = useAppDispatch();
   const [perPage, setPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
-  const currentQuery = asPath.split('?')[1];
-  const [queryCurrent, setQueryCurrent] = useState(currentQuery);
+  // const currentQuery = asPath.split('?')[1];
+  // const [queryCurrent, setQueryCurrent] = useState(currentQuery);
   const { query } = useRouter();
 
   const { data, isLoading, isFetching, error, refetch } = useProductsList(
@@ -36,13 +32,23 @@ export const ListProductsCategoryOne = ({
     query,
   );
 
-  console.log('produtos do hook ql data', data);
-
   useEffect(() => {
-    const newCurrentQuery = asPath.split('?')[1];
+    if (data) {
+      dispatch(
+        addFilters({
+          colorsInfo: data.colorsInfo,
+          brandsInfo: data.brandsInfo,
+          sizesInfo: data.sizesInfo,
+        }),
+      );
+    }
+  }, [data, dispatch]);
 
-    setQueryCurrent(newCurrentQuery);
-  }, [asPath]);
+  // useEffect(() => {
+  //   const newCurrentQuery = asPath.split('?')[1];
+
+  //   setQueryCurrent(newCurrentQuery);
+  // }, [asPath]);
 
   useEffect(() => {
     if (Show && !isNaN(Number(Show))) {
@@ -56,19 +62,7 @@ export const ListProductsCategoryOne = ({
     }
   }, [page]);
 
-  // const products = data?.data.products.map((product) => {
-  //   return {
-  //     id: product.id,
-  //     title: product.name,
-  //     currentValue: product.currentValue,
-  //     previousValue: product.previousValue,
-  //     rate: product.rate,
-  //     img: product.img,
-  //     description: product.description,
-  //     stock: product.stockQuantity,
-  //     colors: product.colors,
-  //   };
-  // });
+  console.log('dataaaa', data?.productsInfo.products);
 
   return (
     <>
@@ -92,14 +86,21 @@ export const ListProductsCategoryOne = ({
         )}
       </Styled.Header>
       <Styled.Wrapper>
-        <FilterCategoryOne />
-        {/* <ProductList
-          products={products}
-          productsCount={data?.data.count}
-          perPage={perPage}
-          count={data?.data.count}
-          currentPage={currentPage}
-        /> */}
+        <FilterCategoryOne
+          brandsInfo={data?.brandsInfo}
+          colorsInfo={data?.colorsInfo}
+          sizesInfo={data?.sizesInfo}
+          priceProductMax={data?.priceMaxProduct}
+          priceProductMin={data?.priceMinProduct}
+        />
+        {data?.productsInfo && (
+          <ProductList
+            products={data.productsInfo.products}
+            perPage={perPage}
+            count={data?.productsInfo.count}
+            currentPage={currentPage}
+          />
+        )}
       </Styled.Wrapper>
     </>
   );

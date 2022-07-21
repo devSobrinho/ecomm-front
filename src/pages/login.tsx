@@ -21,20 +21,11 @@ export default function test(): JSX.Element {
   );
 }
 
-//react -> client
-
-// rota q precisa de auth -> dashboard
-// next getServeSide -> redirect
-// react dashboard e dentro do component valido ERRADO
-// react middleware Auth -> dashboard
-// Routes <Route as={<Auth><Dashboard/></Auth>}
-
 export const getServerSideProps: GetServerSideProps = withSSRGuest(
   async (ctx) => {
     const cookies = parseCookies(ctx);
-    console.log(cookies);
+
     const session = await getSession({ req: ctx.req });
-    console.log('session', session);
 
     return {
       props: {},

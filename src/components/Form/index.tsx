@@ -8,6 +8,8 @@ export type FormProps = {
   title?: string;
   children: ReactNode;
   handleFormSubmit: FormEventHandler<HTMLFormElement>;
+  name?: string;
+  action?: string;
 };
 
 export const Form = ({
@@ -15,10 +17,19 @@ export const Form = ({
   method,
   handleFormSubmit,
   children,
+  name,
+  action,
 }: FormProps): JSX.Element => {
   return (
-    <Styled.Form method={method} onSubmit={handleFormSubmit}>
-      <Text as="h2" text={title} type={'title-alternative'} isUpperCase />
+    <Styled.Form
+      action={action}
+      name={name}
+      method={method}
+      onSubmit={handleFormSubmit}
+    >
+      {title && (
+        <Text as="h2" text={title} type={'title-alternative'} isUpperCase />
+      )}
       {children}
     </Styled.Form>
   );

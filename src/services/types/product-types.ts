@@ -1,10 +1,10 @@
 export type ProductCard = {
   id: string;
   title: string;
-  img: ImageProduct;
+  description: string;
+  images: ImageProduct;
   currentValue: number;
   previousValue: number;
-  description?: string;
   stock: number;
 };
 
@@ -18,6 +18,49 @@ export type RateProps = 0 | 1 | 2 | 3 | 4 | 5;
 export type ProductCardWithRate = {
   rate?: RateProps;
   reviewsCount?: number;
+} & ProductCard;
+
+export type Size = {
+  id: string;
+  name: string;
+};
+
+export type Brand = {
+  id: string;
+  name: string;
+};
+
+export type Color = {
+  id: string;
+  name: string;
+  color: {
+    hex: string;
+    rgba: {
+      r: string;
+      g: string;
+      b: string;
+      a: string;
+    };
+  };
+};
+
+type Images = {
+  id: string;
+  images: [
+    {
+      id: string;
+      image: {
+        url: string;
+      };
+      alt: string;
+    },
+  ];
+};
+
+export type IProduct = {
+  colors: Color[];
+  images: Images[];
+  reviews: any[];
 } & ProductCard;
 
 export type Category = {

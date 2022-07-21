@@ -1,21 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IProduct } from '@services/types/product-types';
 
-export interface ProductsList {
-  id: string;
-  name: string;
+// export interface ProductsList {
+//   id: string;
+//   name: string;
+//   amount: number;
+//   price: number;
+//   stock: number;
+//   images: {
+//     url: string;
+//     alt: string;
+//   }[];
+//   color: string[];
+//   image: {
+//     url: string;
+//     alt: string;
+//   };
+// }
+
+export type ProductsList = {
   amount: number;
-  price: number;
-  stock: number;
-  images: {
-    url: string;
-    alt: string;
-  }[];
-  color: string[];
-  image: {
-    url: string;
-    alt: string;
-  };
-}
+} & Omit<IProduct, 'reviews'>;
 
 export interface CartState {
   productsList: ProductsList[];
@@ -52,19 +57,19 @@ export const cartSlice = createSlice({
 
         state.productsList.find(
           (product) =>
-            product.id === action.payload.product.id && product.amount++,
+            product.id === action.payload.product.id && product.amount + 1,
         );
         return;
       }
-      console.log('o type action', action.type);
-
       state.productsList.push(action.payload.product);
     },
+
     removeProduct: (state, action: PayloadAction<{ id: string }>) => {
       state.productsList = state.productsList.filter(
         (product) => product.id !== action.payload.id,
       );
     },
+
     incrementProduct: (state, action: PayloadAction<{ id: string }>) => {
       if (
         state.productsList.find(
@@ -76,9 +81,10 @@ export const cartSlice = createSlice({
       }
 
       state.productsList.map(
-        (product) => product.id === action.payload.id && product.amount++,
+        (product) => product.id === action.payload.id && product.amount + 1,
       );
     },
+
     decrementProduct: (state, action) => {
       if (
         state.productsList.find(
@@ -87,37 +93,26 @@ export const cartSlice = createSlice({
       )
         return;
       state.productsList.map(
-        (product) => product.id === action.payload.id && product.amount--,
+        (product) => product.id === action.payload.id && product.amount - 1,
       );
     },
-    // subTotalProduct: (state, action: PayloadAction<{ id: string }>) => {
-    //   state.productsList.find(
-    //     (product) =>
-    //       product.id === action.payload.id &&
-    //       product.subTotalProduct === product.amount * product.price,
-    //   );
-    // },
 
-    // total: (state) => {
-    //   state.totalPrice = state.productsList.reduce((totalPrice, product) => {
-    //     return totalPrice + product.price * product.amount;
-    //   }, 0);
-    // },
     openModalCart: (state) => {
       if (state.isCartOpen === true) return;
       state.isCartOpen = true;
     },
+
     closeModalCart: (state) => {
       if (state.isCartOpen === false) return;
       state.isCartOpen = false;
     },
+
     reset: (state) => {
       state.productsList = initialState.productsList;
     },
   },
 });
 
-cartSlice;
 export const {
   addProduct,
   removeProduct,

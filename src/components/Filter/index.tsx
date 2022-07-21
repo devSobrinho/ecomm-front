@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useRouter } from 'next/router';
 
 import { Text } from '@components/Text';
@@ -7,6 +13,7 @@ import { FilterTypeColor } from './FilterTypeColor';
 import * as Styled from './styles';
 
 export type OptionsProps = {
+  id?: string;
   name: string;
   amount?: number;
   color?: string;
@@ -34,25 +41,9 @@ type ListOptions = Option[];
 export const Filter = ({ ...props }: FilterProps): JSX.Element => {
   const { query, push, pathname } = useRouter();
 
+  const [rangeState, setRangeState] = useState('');
   const [optionsState, setOptionsState] = useState<ListOptions>([]);
   const inputRangeRef = useRef<HTMLInputElement>(null);
-
-  // useEffect(() => {
-  //   const filterQueryName = query[props.title];
-  //   const options = props.options.map((option) => {
-  //     if (filterQueryName && filterQueryName.includes(option.name)) {
-  //       return {
-  //         id: option.name,
-  //         isActive: true,
-  //       };
-  //     }
-  //     return {
-  //       id: option.name,
-  //       isActive: false,
-  //     };
-  //   });
-  //   setOptionsState(options);
-  // }, []);
 
   useEffect(() => {
     const filterQueryName = query[props.title];
@@ -86,7 +77,7 @@ export const Filter = ({ ...props }: FilterProps): JSX.Element => {
       }
 
       if (!queryName && !queryValue) return;
-      if (query[queryName]?.includes(queryValue) && props.title === queryName) {
+      if (query[queryName] === queryValue && props.title === queryName) {
         delete query[queryName];
 
         push({ pathname, query });
@@ -101,6 +92,10 @@ export const Filter = ({ ...props }: FilterProps): JSX.Element => {
     [pathname, props.title, push, query],
   );
 
+  const handleRangeSelect = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setRangeState(e.currentTarget.value);
+  }, []);
+
   return (
     <Styled.Wrapper
       className={props.className}
@@ -110,43 +105,92 @@ export const Filter = ({ ...props }: FilterProps): JSX.Element => {
       <div>
         {props.options.map((option, index) => {
           const selectOption = optionsState[index]?.isActive;
+          // if (!option) {
+          //   return <></>;
+          // }
 
           return (
-            <Styled.OptionContainer
-              key={`${index}-${option}`}
-              onClick={() => handleClickOptionSelect(option, props.title)}
-            >
-              {props.typeFilter === 'list' && (
-                <>
-                  <FilterTypeList option={option} active={!!selectOption} />
-                </>
-              )}
+            <React.Fragment key={index}>
+              {!(props.typeFilter === 'range') && (
+                <Styled.OptionContainer
+                  key={`${option.id ? option.id : index + '-' + option}`}
+                  onClick={() => handleClickOptionSelect(option, props.title)}
+                >
+                  {props.typeFilter === 'list' && (
+                    <>
+                      <FilterTypeList option={option} active={!!selectOption} />
+                    </>
+                  )}
 
-              {props.typeFilter === 'colors' && (
-                <>
-                  <FilterTypeColor
-                    selectOption={selectOption}
-                    color={option.color}
-                  />
-                </>
+                  {props.typeFilter === 'colors' && (
+                    <>
+                      <FilterTypeColor
+                        selectOption={selectOption}
+                        color={option.color}
+                      />
+                    </>
+                  )}
+                </Styled.OptionContainer>
               )}
 
               {props.typeFilter === 'range' && (
                 <>
                   {option.range && (
-                    <Styled.RangerOption
-                      valueCurrent={inputRangeRef.current?.value}
-                      current={option.range.current}
-                      type="range"
-                      max={option.range.maxValue}
-                      min={0}
-                      ref={inputRangeRef}
-                      defaultValue={option.range.maxValue}
-                    />
+                    <>
+                      {/* <Styled.RangerOption
+                        // valueCurrent={
+                        //   String(query.range) ?? inputRangeRef.current?.value
+                        // }
+                        // current={option.range.current}
+                        type="range"
+                        max={option.range.maxValue}
+                        min={option.range.minValue ?? 0}
+                        // ref={inputRangeRef}
+                        // defaultValue={option.range.maxValue}
+                      /> */}
+
+                      <Styled.WrapperRange
+                        key={`${option.id ? option.id : index + '-' + option}`}
+                      >
+                        <div className="rangeInfo">
+                          <Text
+                            text={`R$ ${inputRangeRef.current?.value}`}
+                            as="span"
+                            type="text-card"
+                          />
+                        </div>
+                        <input
+                          type="range"
+                          name=""
+                          id=""
+                          ref={inputRangeRef}
+                          max={option.range.maxValue}
+                          min={option.range.minValue ?? 0}
+                          defaultValue={
+                            query[props.title] ?? option.range.maxValue
+                          }
+                          onChange={(e) => handleRangeSelect(e)}
+                        />
+                        {inputRangeRef.current?.value &&
+                          !(
+                            inputRangeRef.current.value === query[props.title]
+                          ) && (
+                            <div className="buttonRange">
+                              <input
+                                type="button"
+                                value="Apply"
+                                onClick={() =>
+                                  handleClickOptionSelect(option, props.title)
+                                }
+                              />
+                            </div>
+                          )}
+                      </Styled.WrapperRange>
+                    </>
                   )}
                 </>
               )}
-            </Styled.OptionContainer>
+            </React.Fragment>
           );
         })}
       </div>

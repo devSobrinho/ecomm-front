@@ -103,6 +103,7 @@ type RangerOptionProps = {
 
 export const RangerOption = styled.input<RangerOptionProps>`
   ${({ theme, valueCurrent, current }) => css`
+    appearance: auto;
     position: relative;
     max-width: 23.6rem;
     width: 100%;
@@ -110,7 +111,6 @@ export const RangerOption = styled.input<RangerOptionProps>`
     margin-top: 4.4rem;
     margin-bottom: 0.8rem;
     background: ${theme.colors.grayLight};
-
     font-family: ${theme.font.family.alternative};
     font-size: 1.8rem;
     line-height: 2.2rem;
@@ -125,6 +125,53 @@ export const RangerOption = styled.input<RangerOptionProps>`
       position: absolute;
       bottom: 3rem;
       right: 0;
+    }
+  `}
+`;
+
+export const WrapperRange = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-direction: column;
+    min-height: 8.3rem;
+
+    & > .rangeInfo {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    & > input[type='range'] {
+      appearance: auto;
+      position: relative;
+      max-width: 23.6rem;
+      width: 100%;
+      height: 0.4rem;
+      margin-top: 1.4rem;
+      margin-bottom: 0.8rem;
+      background: ${theme.colors.grayLight};
+      font-family: ${theme.font.family.alternative};
+      font-size: 1.8rem;
+      line-height: 2.2rem;
+      color: ${theme.colors.blackText};
+    }
+
+    & > .buttonRange {
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      & > input {
+        width: fit-content;
+        padding: 1rem;
+        border-radius: 1rem;
+        background: ${theme.colors.primaryBlue};
+        color: ${theme.colors.white};
+        font-family: ${theme.font.family.primary};
+        font-weight: 600;
+        text-transform: uppercase;
+      }
     }
   `}
 `;

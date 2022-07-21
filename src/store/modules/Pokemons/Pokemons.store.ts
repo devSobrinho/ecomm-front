@@ -65,5 +65,6 @@ export const pokemonsSlice = createSlice({
       });
   },
 });
-
+// redux toolkit
+// redux toolkit query
 export default pokemonsSlice.reducer;

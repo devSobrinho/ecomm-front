@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import { api, loadProducts } from '@services/api/api';
+import { api, loadAllInfoProducts } from '@services/api/api';
 import { Product } from '@services/types/product-types';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -15,54 +15,49 @@ export const getProduct = async (productName: string): Promise<Product> => {
   return response.data;
 };
 
-// CREATE REACT QUERY TO PRODUCT LIST
-// export const getProductList = async ({
-//   pageParam = 1,
-//   queryParam,
-// }: GetProductListProps) => {
-//   const offset = 12;
-//   let limit = 12;
-//   const queryParamSplit = queryParam?.split('&Show=');
-//   console.log('queryParamaaaa', queryParamSplit);
-
-//   if (queryParamSplit && queryParamSplit.length > 1) {
-//     limit = Number(queryParamSplit[1].split('&')[0]);
-//   }
-
-//   const page = `limit=${limit}&offset=${(pageParam - 1) * offset}`;
-
-//   const isQueryParam = `${queryParam && `&${queryParam}`}`;
-//   const response = await api.get(`/products?${page}${isQueryParam}`);
-
-//   return { ...response, totalPages: response.data.count };
-// };
-
-export const getProductList = async ({
+export const getAllInfoProducts = async ({
   pageParam = 1,
   queryParam,
 }: GetProductListProps) => {
   const categoryName = queryParam?.category?.toString();
   const subCategoryName = queryParam?.subcategory?.toString();
+  const colorName = queryParam?.color?.toString();
+  const brandName = queryParam?.brand?.toString();
+  const priceRangeQuery = Number(queryParam?.range?.toString());
+  const priceRange = isNaN(priceRangeQuery) ? undefined : priceRangeQuery;
 
-  const { countProduct, products, countBrand } = await loadProducts({
+  const {
+    productsInfo,
+    sizesInfo,
+    colorsInfo,
+    brandsInfo,
+    priceMinProduct,
+    priceMaxProduct,
+  } = await loadAllInfoProducts({
     categoryName,
     subCategoryName,
+    colorName,
+    brandName,
     last: 12,
+    priceRange,
   });
 
   return {
-    countProduct,
-    products,
-    countBrand,
+    productsInfo,
+    sizesInfo,
+    colorsInfo,
+    brandsInfo,
+    priceMinProduct,
+    priceMaxProduct,
   };
 };
 
 export function useProductsList(page: number, query?: ParsedUrlQuery) {
   return useQuery(
     ['products', query],
-    () => getProductList({ pageParam: page, queryParam: query }),
+    () => getAllInfoProducts({ pageParam: page, queryParam: query }),
     {
-      staleTime: 1000,
+      staleTime: 30000,
     },
   );
 }

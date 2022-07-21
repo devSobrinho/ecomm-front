@@ -48,6 +48,8 @@ export const ProductPage = ({ ...props }: ProductPageProps): JSX.Element => {
   const { productsList: productsCart } = useSelector(
     (state: RootState) => state.cart,
   );
+
+  const [title, setTitle] = useState('');
   const discountPrice = DiscountPrice(props.currentValue, props.previousValue);
   const colorsOptions = props.colors?.map((color) => {
     return {
@@ -55,6 +57,7 @@ export const ProductPage = ({ ...props }: ProductPageProps): JSX.Element => {
       color,
     };
   });
+
   const productInCart = productsCart.find((product) => product.id === props.id);
 
   const imagesProductSelectedColor = props.images.filter((image) =>

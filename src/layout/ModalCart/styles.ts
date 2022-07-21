@@ -6,9 +6,9 @@ export const Wrapper = styled.div`
     position: relative;
 
     > .closeModal {
-      position: absolute;
-      top: -50px;
-      right: -50px;
+      position: fixed;
+      top: 60px;
+      right: 60px;
       color: ${theme.colors.gray2};
       transition: color 300ms ease-in-out;
       cursor: pointer;

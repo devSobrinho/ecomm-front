@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   removeProduct,
-  reset,
   closeModalCart,
 } from '../../store/modules/Cart/Cart.store';
 import { RootState } from '../../store/';
@@ -35,7 +34,7 @@ export const ModalCart = (): JSX.Element => {
 
   const subTotal = () => {
     return productsList.reduce((acc, product) => {
-      return acc + product.price * product.amount;
+      return acc + product.currentValue * product.amount;
     }, 0);
   };
 
@@ -52,7 +51,6 @@ export const ModalCart = (): JSX.Element => {
 
   return (
     <MyModal ariaLabel="modal of cart" paddingModal="3rem 7rem">
-      {/* <Form handleFormSubmit={}> */}
       <Styled.Wrapper>
         <div className="closeModal" onClick={() => dispatch(closeModalCart())}>
           <CloseIcon fontSize={25} />
@@ -75,22 +73,33 @@ export const ModalCart = (): JSX.Element => {
                     >
                       <CloseIcon fontSize="20" />
                     </button>
-                    <Image
-                      width={138}
-                      height={94}
-                      src={product.image.url}
-                      alt={product.image.alt}
-                    />
+                    {product.images[0]?.images[0]?.image?.url ? (
+                      <Image
+                        key={product.images[0].id}
+                        width={138}
+                        height={94}
+                        src={product.images[0].images[0]?.image?.url}
+                        alt={product.images[0]?.images[0]?.alt}
+                      />
+                    ) : (
+                      <Image
+                        width={138}
+                        height={94}
+                        src={'/assets/images/not image.png'}
+                        style={{ opacity: '0.5' }}
+                        alt={'No product image'}
+                      />
+                    )}
                     <Text
                       as="h3"
-                      text={product.name}
+                      text={product.title}
                       type={'title-alternative'}
                     />
                   </div>
                   <Text
                     as="strong"
                     text={`${formatPrice(
-                      product.price * product.amount,
+                      product.currentValue * product.amount,
                       'en-US',
                     )}`}
                     type={'title-alternative'}
@@ -102,7 +111,7 @@ export const ModalCart = (): JSX.Element => {
 
                   <Text
                     as="strong"
-                    text={`${formatPrice(product.price, 'en-US')}`}
+                    text={`${formatPrice(product.currentValue, 'en-US')}`}
                     type={'title-alternative'}
                   />
                 </li>
@@ -142,7 +151,6 @@ export const ModalCart = (): JSX.Element => {
           </div>
         </div>
       </Styled.Wrapper>
-      {/* </Form> */}
     </MyModal>
   );
 };
