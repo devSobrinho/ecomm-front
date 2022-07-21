@@ -6,12 +6,12 @@ export interface ProductsList {
   amount: number;
   price: number;
   stock: number;
-  images: {
+  images?: {
     url: string;
     alt: string;
   }[];
-  color: string[];
-  image: {
+  color?: string[];
+  image?: {
     url: string;
     alt: string;
   };

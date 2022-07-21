@@ -25,8 +25,8 @@ const seeds = (server: ServerProps) => {
   //       });
   //     }
   //   } catch (error) {
-  //     console.log('entra');
-  //   }
+  //     console.log('entra'); // 80R$ DISTANCIA
+  //   } // ADM -> produto -> 3 - 3D  ->  PESO -> DIMENSAO
   // });
 
   // products2.map(async (product) => {

@@ -3,7 +3,6 @@ import {
   ThunkAction,
   Action,
   combineReducers,
-  createImmutableStateInvariantMiddleware,
 } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import {
@@ -24,21 +23,19 @@ import cartReducer from './modules/Cart/Cart.store';
 import whishListReducer from './modules/Wishlist/Wishlist.store';
 import authReducer from './modules/Auth/Auth.store';
 import pokemonsReducer from './modules/Pokemons/Pokemons.store';
+import filtersReducer from './modules/Filters/Filters.store';
 import { pokemonApi } from './modules/Pokemons/PokemonSearch.store';
 // import logger from 'redux-logger';
-
-// const immutableInvariantMiddleware = createImmutableStateInvariantMiddleware({
-//   ignoredPaths: ['ignoredPath', 'ignoredNested.one', 'ignoredNested.two'],
-// });
 
 const reducers = combineReducers({
   // categories: categoriesReducer,
   // products: productReducer,
+  // filters: filtersReducer,
   cart: cartReducer,
   wishList: whishListReducer,
   auth: authReducer,
-  pokemons: pokemonsReducer,
-  [pokemonApi.reducerPath]: pokemonApi.reducer,
+  // pokemons: pokemonsReducer,
+  // [pokemonApi.reducerPath]: pokemonApi.reducer,
 });
 
 const persistConfig = {
@@ -60,17 +57,16 @@ const store = configureStore({
       immutableCheck: {
         ignoredPaths: ['ignoredPath', 'ignoredNested.one', 'ignoredNested.two'],
       },
-    }).concat(pokemonApi.middleware),
+    }),
+  // .concat(pokemonApi.middleware),
   // .concat(immutableInvariantMiddleware),
 });
 
-export const persistor = persistStore(store);
-
-export type RootState = ReturnType<typeof store.getState>;
-
+export const useAppSelector = () => useSelector((state: RootState) => state);
+export const useAppDispatch = () => useDispatch<AppDispatch>();
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+export type RootState = ReturnType<typeof store.getState>;
 
-export const useAppSelector = () => useSelector((state: RootState) => state);
+export const persistor = persistStore(store);
 export default store;

@@ -98,7 +98,7 @@ export const ProductPage = ({ ...props }: ProductPageProps): JSX.Element => {
           id: props.id,
           stock: props.stock,
           name: props.title,
-          image: props.img,
+          image: props.images,
           price: props.currentValue,
         },
       }),

@@ -20,9 +20,9 @@ import 'react-toastify/dist/ReactToastify.css';
 Modal.setAppElement('#__next');
 
 // miragejs removed of project
-// if (process.env.NODE_ENV === 'development') {
-//   makeServer({ environment: process.env.NODE_ENV });
-// }
+if (process.env.NODE_ENV === 'development') {
+  makeServer({ environment: process.env.NODE_ENV });
+}
 // ###Testing miragejs
 // if (process.env.NODE_ENV === 'development') {
 //   makeServerTest();
