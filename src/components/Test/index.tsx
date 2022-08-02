@@ -1,6 +1,6 @@
 import { RootState } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   addProduct,
   incrementProduct,
@@ -23,8 +23,6 @@ export const Test = ({ title }: TestProps): JSX.Element => {
     (state: RootState) => state.cart,
   );
   const dispatch = useDispatch();
-
-  console.log('products', products);
 
   const total = (products: any) => {
     return products.reduce((totalPrice: number, product: any) => {
