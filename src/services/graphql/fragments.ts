@@ -59,7 +59,8 @@ export const GRAPHQL_FRAGMENTS_PAGINATION = gql`
       ...color
     }
     brands {
-      ...brands
+      id
+      name
     }
     sizes {
       ...sizes
